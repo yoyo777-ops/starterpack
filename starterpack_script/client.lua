@@ -1,9 +1,16 @@
-Citizen.CreateThread(function()
+
+local rentalnpc
+local starterpackpoint = lib.points.new({
+   coords = vec3(882.1019, -1573.2881, 29.8214),
+   distance = 30.0,
+})
+
+function starterpackpoint:onEnter()
    local npc = `mp_m_shopkeep_01`
    local loadnpc = lib.requestModel(npc, 2000)
 
    if not loadnpc then return end
-   local rentalnpc = CreatePed(4, npc, 882.1019, -1573.2881, 29.8214, 352.1116, false, true)
+   rentalnpc = CreatePed(4, npc, 882.1019, -1573.2881, 29.8214, 352.1116, false, true)
    FreezeEntityPosition(rentalnpc, true)
    SetEntityInvincible(rentalnpc, true)
    SetBlockingOfNonTemporaryEvents(rentalnpc, true)
@@ -24,4 +31,8 @@ Citizen.CreateThread(function()
          end)
       end
    } })
-end)
+end
+
+function starterpackpoint:onExit()
+   DeleteEntity(rentalnpc)
+end
